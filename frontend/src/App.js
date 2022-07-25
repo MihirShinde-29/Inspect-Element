@@ -62,13 +62,14 @@ export default function ToggleColorMode() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        {/* <MyApp /> */}
         <Router>
           <NavBar />
           <Routes>
             <Route exact path="/" element={<Signup />} />
             <Route path="/login" element={<Login></Login>} />
-            <Route path="/Profile" element={<Profilepage />} />
+            <Route path="/Profile" element={<>
+              <MyApp />
+              <Profilepage /></>} />
 
           </Routes>
         </Router>

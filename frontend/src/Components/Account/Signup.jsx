@@ -55,10 +55,9 @@ import { FormatAlignLeftSharp } from "@mui/icons-material";
 // import { url } from '../url.js'
 
 const validationSchema = yup.object({
-  email: yup
-    .string('Enter your Email')
-    .email('Enter a valid email')
-    .required('Email is required'),
+  secretName: yup
+    .string('Enter your secret name')
+    .required('secretName is required'),
   password: yup
     .string('Enter your password')
     .min(8, 'Password is too short')
@@ -111,28 +110,29 @@ const Signup = () => {
   const formik = useFormik({
     initialValues: {
       firstname: '',
-      email: '',
+      secretName: '',
       password: '',
       lastname: '',
       confirmpass: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      localStorage.setItem("Name", values.firstname +" "+ values.lastname);
+      localStorage.setItem("Name", values.firstname + " " + values.lastname);
       var axios = require('axios');
-      var FormData = require('form-data');
-      var data = new FormData();
-      data.append('email', values.email);
-      data.append('password', values.password);
-      data.append('firstname', values.firstname);
-      data.append('lastname', values.lastname);
+      var data = JSON.stringify({
+        "username": values.firstname + " " + values.lastname,
+        "password": values.password,
+        "secretName": values.secretName,
+      });
+
       var config = {
         method: 'post',
-        // url: url + 'accounts/signup/',
-        headers: {},
+        url: 'http://localhost:3500/register',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         data: data
       };
-      history('/login')
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
@@ -140,6 +140,7 @@ const Signup = () => {
         .catch(function (error) {
           console.log(error);
         });
+      history('/login')
     },
   });
 
@@ -194,13 +195,13 @@ const Signup = () => {
                     <Grid item xs={12} sm={12} md={12}>
                       <TextField
                         fullWidth
-                        id="email"
-                        name="email"
-                        label="Email"
-                        value={formik.values.email}
+                        id="secretName"
+                        name="secretName"
+                        label="Code name"
+                        value={formik.values.secretName}
                         onChange={formik.handleChange}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
+                        error={formik.touched.secretName && Boolean(formik.errors.secretName)}
+                        helperText={formik.touched.secretName && formik.errors.secretName}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12}>
