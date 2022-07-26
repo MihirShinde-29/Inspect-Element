@@ -14,7 +14,7 @@ import NavBar from './Components/Account/navBar';
 import Profilepage from './Components/Account/ProfilePage';
 import Visualize from './Components/Graphs/visualize';
 import Dashboard from './screen/Dashboard';
-import SideBar from './components/SideBar';
+import SideBar from './Components/Account/sidebar';
 import Inventory from './screen/Inventory';
 import RequireAuth from './screen/RequiredAuth';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
@@ -77,8 +77,13 @@ export default function ToggleColorMode() {
               <Profilepage /></>} />
             <Route path='/visualize' element={<>
               <MyApp />
+              <SideBar />
               <Visualize /></>}></Route>
-            <Route path="home" element={<Inventory />} />
+            <Route path="home" element={<>
+              <SideBar />
+              <Inventory />
+            </>} />
+
             <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </Router>
