@@ -13,10 +13,9 @@ import Login from './Components/Account/Login';
 import NavBar from './Components/Account/navBar';
 import Profilepage from './Components/Account/ProfilePage';
 import Visualize from './Components/Graphs/visualize';
-import Dashboard from './screen/Dashboard';
 import SideBar from './Components/Account/sidebar';
-import Inventory from './screen/Inventory';
-import RequireAuth from './screen/RequiredAuth';
+import Inventory from './Components/Inventory/Inventory';
+import RequireAuth from './Components/Account/RequiredAuth';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -84,7 +83,6 @@ export default function ToggleColorMode() {
               <Inventory />
             </>} />
 
-            <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </Router>
       </ThemeProvider>

@@ -1,7 +1,7 @@
 import { Box } from '@mui/system'
 import React from 'react'
-import SideBar from '../Components/SideBar'
-import EnhancedTable from '../Components/Table'
+import SideBar from '../Account/SideBarMihir'
+import EnhancedTable from './Table'
 
 const Inventory = () => {
   return (
