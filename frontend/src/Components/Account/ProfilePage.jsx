@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { Typography } from "@mui/material";
 
 
 const INITIAL_FORM_STATE = {
@@ -42,7 +43,7 @@ const Profilepage = () => {
     const navigate = useNavigate()
     const [details, setDetails] = useState([]);
     return (
-        <div style={{ backgroundColor: "#F8F8F8" }}>
+        <Box style={{ backgroundColor: "#F8F8F8" }}>
             <center>
                 <div
                     style={{
@@ -67,20 +68,18 @@ const Profilepage = () => {
                     <CardContent>
                         <Grid container>
                             <Grid item>
-                                <p
+                                <Typography
                                     style={{
                                         fontFamily: "Alumni Sans",
                                         fontWeight: "600",
                                         letterSpacing: "1%",
                                         fontSize: "36px",
-                                        // lineHeight:"25.4px",
-                                        color: "black",
                                         margin: '0',
                                         padding: '0'
                                     }}
                                 >
                                     BHUMIKA MANGE
-                                </p>
+                                </Typography>
                             </Grid>
                             <Grid item sx={{ width: "100%", marginTop: "3%" }}>
                                 <Formik
@@ -226,7 +225,7 @@ const Profilepage = () => {
                     </CardContent>
                 </Card>
             </Box>
-        </div>
+        </Box>
     );
 };
 

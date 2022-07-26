@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Outlet } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -13,6 +13,10 @@ import Login from './Components/Account/Login';
 import NavBar from './Components/Account/navBar';
 import Profilepage from './Components/Account/ProfilePage';
 import Visualize from './Components/Graphs/visualize';
+import Dashboard from './screen/Dashboard';
+import SideBar from './components/SideBar';
+import Inventory from './screen/Inventory';
+import RequireAuth from './screen/RequiredAuth';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -74,6 +78,8 @@ export default function ToggleColorMode() {
             <Route path='/visualize' element={<>
               <MyApp />
               <Visualize /></>}></Route>
+            <Route path="home" element={<Inventory />} />
+            <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </Router>
       </ThemeProvider>
