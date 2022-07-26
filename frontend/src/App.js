@@ -12,6 +12,7 @@ import Signup from './Components/Account/Signup';
 import Login from './Components/Account/Login';
 import NavBar from './Components/Account/navBar';
 import Profilepage from './Components/Account/ProfilePage';
+import Visualize from './Components/Graphs/visualize';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -70,7 +71,9 @@ export default function ToggleColorMode() {
             <Route path="/Profile" element={<>
               <MyApp />
               <Profilepage /></>} />
-
+            <Route path='/visualize' element={<>
+              <MyApp />
+              <Visualize /></>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>

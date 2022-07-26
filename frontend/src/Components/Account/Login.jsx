@@ -36,14 +36,12 @@ import { Link } from "react-router-dom";
 import { FormatAlignLeftSharp } from "@mui/icons-material";
 
 const validationSchema = yup.object({
-    email: yup
-        .string('Enter your Email')
-        .email('Enter a valid email')
-        .required('Email is required'),
+    username: yup
+        .string('Enter your username')
+        .required('username is required'),
     password: yup
         .string('Enter your password')
-        .min(8, 'Password is too short')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Password nust conatin minimum eight characters, at least one letter, one number and one special character are required')
+        .min(5, 'Password is too short')
         .required('Password is required'),
 
 });
@@ -59,32 +57,12 @@ const Login = () => {
     }, []);
     const formik = useFormik({
         initialValues: {
-            email: '',
+            username: '',
             password: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values);
-            var axios = require('axios');
-            var FormData = require('form-data');
-            var data = new FormData();
-            data.append('email', values.email);
-            data.append('password', values.password);
 
-            var config = {
-                method: 'post',
-                url: 'http://127.0.0.1:8000/accounts/login/',
-                headers: {},
-                data: data
-            };
-
-            axios(config)
-                .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
         },
     });
     const [passwordShow, setpassword] = React.useState(false);
@@ -94,11 +72,11 @@ const Login = () => {
     const history = useNavigate();
 
     return (
-        <div style={{padding:'4%'}}>
+        <div style={{ padding: '4%' }}>
             <Card>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                        <img src='https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg' alt="signup" style={{ width: "90%"}} />
+                        <img src='https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg' alt="signup" style={{ width: "90%" }} />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Grid container>
@@ -114,13 +92,13 @@ const Login = () => {
                                         <Grid item xs={12} sm={12} md={12}>
                                             <TextField
                                                 fullWidth
-                                                id="email"
-                                                name="email"
-                                                label="Email"
-                                                value={formik.values.email}
+                                                id="username"
+                                                name="username"
+                                                label="Username"
+                                                value={formik.values.username}
                                                 onChange={formik.handleChange}
-                                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                                helperText={formik.touched.email && formik.errors.email}
+                                                error={formik.touched.username && Boolean(formik.errors.username)}
+                                                helperText={formik.touched.username && formik.errors.username}
                                                 InputLabelProps={{ style: { fontSize: 20 } }}
                                                 InputProps={{
                                                     style: { fontSize: 25 }
@@ -180,27 +158,31 @@ const Login = () => {
                                                     textShadow: "0 0 8px rgb(255,255,255)",
                                                     transition: { duration: 0.3 },
                                                 }}
-                                                onClick={(e) => {
-                                                    console.log(e);
-                                                    history("/dashboard");
+                                                onClick={(values) => {
+                                                    var axios = require('axios');
+                                                    var data = JSON.stringify({
+                                                        "username": values.username,
+                                                        "password": values.password,
+                                                    });
+
+                                                    console.log(data);
+
                                                     var config = {
                                                         method: 'post',
-                                                        // url: url + 'accounts/login/',
-                                                        headers: {},
-                                                        // data: values
+                                                        url: 'http://localhost:3500/login',
+                                                        headers: {
+                                                            'Content-Type': 'application/json'
+                                                        },
+                                                        data: data
                                                     };
-                                                    // axios.post(url + 'accounts/login/')
-                                                    //     .then(function (response) {
-                                                    //         console.log(JSON.stringify(response.data));
-                                                    //         if (response.data.teacher) {
-                                                    //             history("/dashboard");
-                                                    //         }
-                                                    //     })
-                                                    //     .catch(function (error) {
-                                                    //         console.log(error);
-                                                    //     });
-                                                }
-                                                }
+                                                    axios(config)
+                                                        .then(function (response) {
+                                                            console.log(JSON.stringify(response.data));
+                                                        })
+                                                        .catch(function (error) {
+                                                            console.log(error);
+                                                        });
+                                                }}
                                             >
                                                 Submit
                                             </Button>
@@ -266,7 +248,7 @@ const Login = () => {
                                                     style={{
                                                         textDecoration: "none",
                                                         fontSize: ".8rem",
-                                                        color:'red'
+                                                        color: 'red'
                                                     }}
                                                 >
                                                     Forgot Password ?

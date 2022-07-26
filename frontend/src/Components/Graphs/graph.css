@@ -1,0 +1,21 @@
+.salesValue {
+ color: #F15C80;
+ font-size: 2.4rem;
+ margin-bottom: 0;
+}
+
+.salesQuantity{
+    margin-top: 0%;
+    color: grey;
+}
+
+.salesStatus{
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.Sales{
+    /* width: 180px; */
+    /* height: 180px; */
+    padding: 1%;
+}

@@ -6,8 +6,8 @@ require("dotenv").config();
 
 
 const loginUser = async (req, res) => {
-    const { username, secretName, password } = req.body;
-    if (!secretName || !password || !username) return res.status(400).json({ "Message": "Invalid cred" });
+    const { username, password } = req.body;
+    if (!password || !username) return res.status(400).json({ "Message": "Invalid cred" });
 
     const foundUser = await User.findOne({ username: username })
     if (!foundUser) return res.status(401).json({ "Message": "user not found" });
