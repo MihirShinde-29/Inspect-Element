@@ -4,14 +4,18 @@ import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Outlet } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { Button } from '@mui/material';
-import Signup from './Components/Account/Signup';
-import Login from './Components/Account/Login';
-import NavBar from './Components/Account/navBar';
-import Profilepage from './Components/Account/ProfilePage';
+import Signup from './components/Account/Signup';
+import Login from './components/Account/Login';
+import NavBar from './components/Account/navBar';
+import Profilepage from './components/Account/ProfilePage';
+import Dashboard from './screen/Dashboard';
+import SideBar from './components/SideBar';
+import Inventory from './screen/Inventory';
+import RequireAuth from './screen/RequiredAuth';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -66,11 +70,17 @@ export default function ToggleColorMode() {
           <NavBar />
           <Routes>
             <Route exact path="/" element={<Signup />} />
-            <Route path="/login" element={<Login></Login>} />
-            <Route path="/Profile" element={<>
-              <MyApp />
-              <Profilepage /></>} />
-
+            <Route path="/login" element={<Login />} />
+            <Route path="/Profile" element={
+              <>
+                <MyApp />
+                <Profilepage />
+              </>
+            } />
+            <Route path="/" element={<RequireAuth />}>              
+              <Route path="home" element={<Inventory />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Route>
           </Routes>
         </Router>
       </ThemeProvider>

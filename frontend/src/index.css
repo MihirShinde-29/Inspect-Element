@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.sidebar{
+  width: 250px;
+  min-width: 250px;
+  padding: 20px 20px;
+  margin: auto;
+  font-family: 'Popins', sans-serif;
+  /* box-shadow: 0 0 6px hsl(210 14% 90%); */
+}
+
+.link{
+  display: flex;
+  align-items: cover;
+  cursor: pointer;
+  border-radius: 40px;
+  padding: 5px;
+}
+.link:hover{
+  background-color: #e8f5fe;
+  color: #50b7f5;
+  transition: color 100ms ease-out;
+}
+.link > h2{
+  font-weight: 700;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-left: 10px
+}
