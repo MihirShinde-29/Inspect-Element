@@ -159,6 +159,7 @@ const Login = () => {
                                                     transition: { duration: 0.3 },
                                                 }}
                                                 onClick={(values) => {
+                                                    history("/home");
                                                     var axios = require('axios');
                                                     var data = JSON.stringify({
                                                         "username": values.username,

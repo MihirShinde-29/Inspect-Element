@@ -84,6 +84,7 @@ export default function ToggleColorMode() {
                 <DarkVisualize />}
             </>}></Route>
             <Route path="home" element={<>
+              <MyApp />
               <SideBar />
               <Inventory />
             </>} />

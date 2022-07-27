@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import LogoutIcon from '@mui/icons-material/Logout';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,6 +19,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ScienceIcon from '@mui/icons-material/Science';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const drawerWidth = 240;
 
@@ -114,29 +119,57 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem key='Inventory' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <InventoryIcon />
+              </ListItemIcon>
+              <ListItemText primary='Inventory' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key='Chemicals' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ScienceIcon />
+              </ListItemIcon>
+              <ListItemText primary='Chemicals' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key='Equipments' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ScienceIcon />
+              </ListItemIcon>
+              <ListItemText primary='Equipments' />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem key='Graphs' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <QueryStatsIcon></QueryStatsIcon>
+              </ListItemIcon>
+              <ListItemText primary='Graphs' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key='Invoices' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ReceiptIcon></ReceiptIcon>
+              </ListItemIcon>
+              <ListItemText primary='Invoices' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key='Logout' style={{ color: 'red' }} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LogoutIcon style={{ color: 'red' }}></LogoutIcon>
+              </ListItemIcon>
+              <ListItemText primary='Logout' />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Main open={open}>
