@@ -16,8 +16,6 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { useNavigate } from "react-router-dom";
 const pages = [
     "login",
-    "category",
-    "information",
 ];
 
 function ElevationScroll(props) {

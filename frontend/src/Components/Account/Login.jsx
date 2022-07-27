@@ -62,12 +62,11 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-
+            console.log(values);
         },
     });
     const [passwordShow, setpassword] = React.useState(false);
-    const [passwordShow2, setpassword2] = React.useState(false);
-
+    const [username, setUsername] = React.useState("");
 
     const history = useNavigate();
 
@@ -95,8 +94,8 @@ const Login = () => {
                                                 id="username"
                                                 name="username"
                                                 label="Username"
-                                                value={formik.values.username}
-                                                onChange={formik.handleChange}
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
                                                 error={formik.touched.username && Boolean(formik.errors.username)}
                                                 helperText={formik.touched.username && formik.errors.username}
                                                 InputLabelProps={{ style: { fontSize: 20 } }}
@@ -160,6 +159,14 @@ const Login = () => {
                                                 }}
                                                 onClick={(values) => {
                                                     history("/home");
+                                                    if (username === "Jesse" || "Walter") {
+                                                        // role -> can update inventory
+                                                        localStorage.setItem("role", "1");
+                                                    }
+                                                    else {
+                                                        localStorage.setItem("role", "0");
+
+                                                    }
                                                     var axios = require('axios');
                                                     var data = JSON.stringify({
                                                         "username": values.username,

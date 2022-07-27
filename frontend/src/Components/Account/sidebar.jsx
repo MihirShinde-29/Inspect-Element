@@ -23,6 +23,8 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ScienceIcon from '@mui/icons-material/Science';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import { Fab, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -86,7 +88,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" elevation={0} color='transparent' open={open}>
+      <Paper elevation={0} style={{ display: 'inline' }} color="inherit" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -98,7 +100,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </Paper>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -146,30 +148,38 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
         <List>
-          <ListItem key='Graphs' disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <QueryStatsIcon></QueryStatsIcon>
-              </ListItemIcon>
-              <ListItemText primary='Graphs' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key='Invoices' disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ReceiptIcon></ReceiptIcon>
-              </ListItemIcon>
-              <ListItemText primary='Invoices' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key='Logout' style={{ color: 'red' }} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LogoutIcon style={{ color: 'red' }}></LogoutIcon>
-              </ListItemIcon>
-              <ListItemText primary='Logout' />
-            </ListItemButton>
-          </ListItem>
+          <Link to="/visualize" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Graphs' disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <QueryStatsIcon></QueryStatsIcon>
+                </ListItemIcon>
+                <ListItemText primary='Graphs' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+
+          <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Invoices' disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ReceiptIcon></ReceiptIcon>
+                </ListItemIcon>
+                <ListItemText primary='Invoices' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+
+          <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Logout' style={{ color: 'red' }} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <LogoutIcon style={{ color: 'red' }}></LogoutIcon>
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <Main open={open}>

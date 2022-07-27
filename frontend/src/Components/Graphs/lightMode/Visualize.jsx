@@ -83,12 +83,12 @@ const LightVisualize = () => {
                 <br /><br /><br />
                 <Line />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} >
                 <br /><br /><br />
-                <p style={{ fontSize: '1.08rem' }}>PRODUCT DETAILS</p>
+                <p style={{ fontSize: '1.08rem',textAlign:'center' }}>PRODUCT DETAILS</p>
                 <Divider></Divider>
-                <Grid container>
-                    <Grid item xs={12}>
+                <Grid container style={{borderLeft:'1px solid grey',padding:'4px'}}>
+                    <Grid item xs={12} style={{padding:'2%',margin:'2.2%'}}>
                         <p style={{ color: 'orangered' }}>Low Stock Items
                             <span style={{ float: "right", color: 'orangered' }}>13</span></p>
                         <p>All Item Groups

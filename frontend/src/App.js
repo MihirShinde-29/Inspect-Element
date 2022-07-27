@@ -8,16 +8,17 @@ import { BrowserRouter as Router, Outlet } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { Button } from '@mui/material';
-import Signup from './components/Account/Signup';
-import Login from './components/Account/Login';
-import NavBar from './components/Account/navBar';
-import Profilepage from './components/Account/ProfilePage';
-import Visualize from './components/Graphs/DarkMode/visualize';
-import SideBar from './components/Account/sidebar';
-import Inventory from './components/Inventory/Inventory';
-import RequireAuth from './components/Account/RequiredAuth';
-import LightVisualize from './components/Graphs/lightMode/Visualize';
-import DarkVisualize from './components/Graphs/DarkMode/visualize';
+import Signup from './Components/Account/Signup';
+import Login from './Components/Account/Login';
+import NavBar from './Components/Account/navBar';
+import Profilepage from './Components/Account/ProfilePage';
+import SideBar from './Components/Account/sidebar';
+import Inventory from './Components/Inventory/Inventory';
+import RequireAuth from './Components/Account/RequiredAuth';
+import LightVisualize from './Components/Graphs/lightMode/Visualize';
+import DarkVisualize from './Components/Graphs/DarkMode/visualize';
+import Fab from '@mui/material/Fab';
+import NotFound from './Components/Account/notFound';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -25,22 +26,12 @@ function MyApp() {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        // width: '100%',
-        alignItems: 'right',
-        justifyContent: 'right',
-        bgcolor: 'background.default',
-        color: 'text.primary',
-        borderRadius: 1,
-        p: 3,
-      }}
-    >
-      <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+
+    <Fab size="medium" color="inherit" style={{ float: 'right', margin: '8px' }} aria-label="add">
+      <IconButton onClick={colorMode.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
-    </Box>
+    </Fab>
   );
 }
 
@@ -70,10 +61,15 @@ export default function ToggleColorMode() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <Router>
-          <NavBar />
           <Routes>
-            <Route exact path="/" element={<Signup />} />
-            <Route path="/login" element={<Login></Login>} />
+            <Route exact path="/" element={<>
+              {/* <NavBar /> */}
+              <Signup />
+            </>} />
+            <Route exact path="/login" element={<>
+              {/* <NavBar /> */}
+              <Login />
+            </>} />
             <Route path="/Profile" element={<>
               <MyApp />
               <Profilepage /></>} />
@@ -83,12 +79,11 @@ export default function ToggleColorMode() {
               {mode === "light" ? <LightVisualize /> :
                 <DarkVisualize />}
             </>}></Route>
-            <Route path="home" element={<>
+            <Route path="/home" element={<>
               <MyApp />
-              <SideBar />
               <Inventory />
             </>} />
-
+            <Route path="/*" element={<center><NotFound /></center>} />
           </Routes>
         </Router>
       </ThemeProvider>
