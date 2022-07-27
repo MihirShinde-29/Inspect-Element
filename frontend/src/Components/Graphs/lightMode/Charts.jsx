@@ -20,7 +20,7 @@ const options = {
         }
     },
     xAxis: [{
-        
+
         type: 'category'
     }],
     yAxis: {
@@ -317,10 +317,10 @@ const options = {
     }
 };
 
-const Chart = () => {
+const LightChart = () => {
     return (
         <div><HighchartsReact highcharts={Highcharts} options={options} /></div>
     )
 }
 
-export default Chart
+export default LightChart

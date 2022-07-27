@@ -3,8 +3,8 @@ import React from 'react'
 import { useEffect } from "react";
 import { Grid } from '@mui/material';
 import Line from "./Line"
-import Chart from "./Chart"
-import "./graph.css"
+import LightChart from "./Charts"
+import "../graph.css"
 // import NumberOfEx from "./NumberOfEx"
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -15,7 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Pie from "./Pie"
 import Divider from '@mui/material/Divider';
 
-const Visualize = () => {
+const LightVisualize = () => {
     const onTop = () => {
         window.scrollTo(0, 0);
     };
@@ -85,33 +85,31 @@ const Visualize = () => {
             </Grid>
             <Grid item xs={4}>
                 <br /><br /><br />
-                <Card>
-                    <p style={{ fontSize: '1.08rem' }}>PRODUCT DETAILS</p>
-                    <Divider></Divider>
-                    <Grid container>
-                        <Grid item xs={8}>
-                            <p style={{ color: 'orangered' }}>Low Stock Items
-                                <span style={{ float: "right", color: 'orangered' }}>13</span></p>
-                            <p>All Item Groups
-                                <span style={{ float: "right" }}>23</span></p>
-                            <p>All Items
-                                <span style={{ float: "right" }}>340</span></p>
+                <p style={{ fontSize: '1.08rem' }}>PRODUCT DETAILS</p>
+                <Divider></Divider>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <p style={{ color: 'orangered' }}>Low Stock Items
+                            <span style={{ float: "right", color: 'orangered' }}>13</span></p>
+                        <p>All Item Groups
+                            <span style={{ float: "right" }}>23</span></p>
+                        <p>All Items
+                            <span style={{ float: "right" }}>340</span></p>
 
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Pie />
-                        </Grid>
                     </Grid>
-                </Card >
+                    <Grid item xs={12}>
+                        <Pie />
+                    </Grid>
+                </Grid>
             </Grid >
             <Grid item xs={12}>
                 <br /><br /><br />
 
-                <Chart />
+                <LightChart />
 
             </Grid>
         </Grid >
     )
 }
 
-export default Visualize
+export default LightVisualize

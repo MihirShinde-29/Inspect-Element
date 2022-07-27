@@ -12,10 +12,12 @@ import Signup from './Components/Account/Signup';
 import Login from './Components/Account/Login';
 import NavBar from './Components/Account/navBar';
 import Profilepage from './Components/Account/ProfilePage';
-import Visualize from './Components/Graphs/visualize';
+import Visualize from './Components/Graphs/DarkMode/visualize';
 import SideBar from './Components/Account/sidebar';
 import Inventory from './Components/Inventory/Inventory';
 import RequireAuth from './Components/Account/RequiredAuth';
+import LightVisualize from './Components/Graphs/lightMode/Visualize';
+import DarkVisualize from './Components/Graphs/DarkMode/visualize';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -53,6 +55,7 @@ export default function ToggleColorMode() {
     [],
   );
 
+  console.log(mode);
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -77,7 +80,9 @@ export default function ToggleColorMode() {
             <Route path='/visualize' element={<>
               <MyApp />
               <SideBar />
-              <Visualize /></>}></Route>
+              {mode === "light" ? <LightVisualize /> :
+                <DarkVisualize />}
+            </>}></Route>
             <Route path="home" element={<>
               <SideBar />
               <Inventory />
