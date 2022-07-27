@@ -4,6 +4,8 @@ import PersistentDrawerLeft from '../Account/sidebar'
 import addNotification from 'react-push-notification';
 import EnhancedTable from './Table'
 import { Chip, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
+import { Link } from 'react-router-dom';
+import TablePending from './TableOther';
 
 const TabLabel = ({ name, number, checked }) => {
   return (
@@ -34,9 +36,11 @@ const Tabs = ({ checked, setChecked, tabs }) => {
         value={checked}
         onChange={(event) => setChecked(event.target.value)}
       >
-        {tabsList.map((tab, index) => <FormControlLabel key={index} value={tab[0]} control={<Radio sx={{ visibility: 'hidden', width: 0 }}
-          onClick={buttonClick}
-        />} label={<TabLabel name={tab[0]} checked={checked} number={tab[1]} />} />)}
+        {tabsList.map((tab, index) =>
+
+          <FormControlLabel key={index} value={tab[0]} control={<Radio sx={{ visibility: 'hidden', width: 0 }}
+            // onClick={buttonClick}
+          />} label={<TabLabel name={tab[0]} checked={checked} number={tab[1]} />} />)}
       </RadioGroup>
     </Box>
   )
@@ -46,17 +50,22 @@ const Inventory = () => {
   const [checked, setChecked] = useState('All');
   let tabs = {
     'All': 23,
-    'Pending': 12,
-    'Completed': 3,
+    'Shipped': 11,
+    'Ordered': 3,
+    'Required': 13,
   }
   return (
     <Box sx={{ display: 'flex' }}>
       <PersistentDrawerLeft />
       <Box sx={{ padding: 4, width: '100%' }}>
         <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />
-        <EnhancedTable ckecked={checked} />
+        {checked === "All" ?
+          <EnhancedTable ckecked={checked} />
+          :
+          <TablePending ckecked={checked}/>
+        }
       </Box>
-    </Box>
+    </Box >
   )
 }
 
