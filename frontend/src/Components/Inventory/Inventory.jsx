@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Box } from '@mui/system'
-import SideBar from '../components/SideBar'
-import EnhancedTable from '../components/Table'
+import PersistentDrawerLeft from '../Account/sidebar'
+import EnhancedTable from './Table'
 import { Chip, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
 
 const TabLabel = ({name, number, checked}) => {
@@ -37,7 +37,7 @@ const Inventory = () => {
   }
   return (
     <Box sx={{display: 'flex'}}>
-      <SideBar />
+      <PersistentDrawerLeft />
       <Box sx={{padding: 4, width: '100%'}}>
         <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />
         <EnhancedTable ckecked={checked} />

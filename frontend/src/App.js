@@ -12,10 +12,12 @@ import Signup from './components/Account/Signup';
 import Login from './components/Account/Login';
 import NavBar from './components/Account/navBar';
 import Profilepage from './components/Account/ProfilePage';
-import Dashboard from './screen/Dashboard';
-import SideBar from './components/SideBar';
-import Inventory from './screen/Inventory';
-import RequireAuth from './screen/RequiredAuth';
+import Visualize from './components/Graphs/DarkMode/visualize';
+import SideBar from './components/Account/sidebar';
+import Inventory from './components/Inventory/Inventory';
+import RequireAuth from './components/Account/RequiredAuth';
+import LightVisualize from './components/Graphs/lightMode/Visualize';
+import DarkVisualize from './components/Graphs/DarkMode/visualize';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -53,6 +55,7 @@ export default function ToggleColorMode() {
     [],
   );
 
+  console.log(mode);
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -70,17 +73,21 @@ export default function ToggleColorMode() {
           <NavBar />
           <Routes>
             <Route exact path="/" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/Profile" element={
-              <>
-                <MyApp />
-                <Profilepage />
-              </>
-            } />
-            <Route path="/" element={<RequireAuth />}>              
-              <Route path="home" element={<Inventory />} />
-              <Route path="dashboard" element={<Dashboard />} />
-            </Route>
+            <Route path="/login" element={<Login></Login>} />
+            <Route path="/Profile" element={<>
+              <MyApp />
+              <Profilepage /></>} />
+            <Route path='/visualize' element={<>
+              <MyApp />
+              <SideBar />
+              {mode === "light" ? <LightVisualize /> :
+                <DarkVisualize />}
+            </>}></Route>
+            <Route path="home" element={<>
+              <SideBar />
+              <Inventory />
+            </>} />
+
           </Routes>
         </Router>
       </ThemeProvider>

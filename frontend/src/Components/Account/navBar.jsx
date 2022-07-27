@@ -48,7 +48,13 @@ const NavBar = (elev) => {
     });
     const anchor = "left";
     const [openPopup, setOpenPopup] = useState(false);
-
+    const [open, setOpen] = React.useState(false);
+    const handleDrawerOpen = () => {
+      setOpen(true);
+    };
+    const handleDrawerClose = () => {
+      setOpen(false);
+    };
     const toggleDrawer = (anchor, open) => (event) => {
         if (
             event.type === "keydown" &&
@@ -68,6 +74,20 @@ const NavBar = (elev) => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
+                <ListItem button>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        color="success"
+                        style={{
+                            transform: "translate(-180px,20px)",
+                            backgroundColor: "#fe6c77",
+                        }}
+                        onClick={handleDrawerOpen}
+                    >
+                        Admin ?
+                    </Button>
+                </ListItem>
                 <Link
                     style={{ textDecoration: "none" }}
                     to={`/`}
@@ -190,25 +210,25 @@ const NavBar = (elev) => {
                                 ))}
                             </Box>
                             <Box sx={{ flexGrow: 0 }}>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => navigate("/Profile")}
-                                        size="large"
-                                        className="mainScreenButton"
-                                        style={{
-                                            backgroundColor: "#2D3748",
-                                            color: "white",
-                                            fontWeight: "800",
-                                        }}
-                                    >
-                                        Profile
-                                    </Button>{" "}
+                                <Button
+                                    variant="contained"
+                                    onClick={() => navigate("/Profile")}
+                                    size="large"
+                                    className="mainScreenButton"
+                                    style={{
+                                        backgroundColor: "#2D3748",
+                                        color: "white",
+                                        fontWeight: "800",
+                                    }}
+                                >
+                                    Profile
+                                </Button>{" "}
                             </Box>
                         </Toolbar>
                     </Container>
                 </AppBar>
             </ElevationScroll>
-           
+
         </>
     );
 };
