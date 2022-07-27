@@ -17,9 +17,10 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { Button } from '@mui/material';
+import { Autocomplete, Button, InputAdornment, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 
 function createData(name, calories, fat, carbs, protein) {
   return {
@@ -181,10 +182,29 @@ const EnhancedTableToolbar = (props) => {
       }}
     >
       <Box sx={{ flex: '1 1 100%' }}>
-        <Button variant="contained">
+        <Button variant="contained" sx={{paddingY: 1, paddingX: 2}}>
+          <AddIcon />
           Add Item
         </Button>
       </Box>
+      <Autocomplete
+        disablePortal
+        id="combo-box-demo"
+        options={[]}
+        renderInput={(params) => (
+          <TextField
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
+      />
+      
 
       {numSelected > 0 && (
         <Tooltip title="Delete">
