@@ -8,16 +8,16 @@ import { BrowserRouter as Router, Outlet } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { Button } from '@mui/material';
-import Signup from './Components/Account/Signup';
-import Login from './Components/Account/Login';
-import NavBar from './Components/Account/navBar';
-import Profilepage from './Components/Account/ProfilePage';
-import Visualize from './Components/Graphs/DarkMode/visualize';
-import SideBar from './Components/Account/sidebar';
-import Inventory from './Components/Inventory/Inventory';
-import RequireAuth from './Components/Account/RequiredAuth';
-import LightVisualize from './Components/Graphs/lightMode/Visualize';
-import DarkVisualize from './Components/Graphs/DarkMode/visualize';
+import Signup from './components/Account/Signup';
+import Login from './components/Account/Login';
+import NavBar from './components/Account/navBar';
+import Profilepage from './components/Account/ProfilePage';
+import Visualize from './components/Graphs/DarkMode/visualize';
+import SideBar from './components/Account/sidebar';
+import Inventory from './components/Inventory/Inventory';
+import RequireAuth from './components/Account/RequiredAuth';
+import LightVisualize from './components/Graphs/lightMode/Visualize';
+import DarkVisualize from './components/Graphs/DarkMode/visualize';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
