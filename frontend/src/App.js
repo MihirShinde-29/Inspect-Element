@@ -19,6 +19,7 @@ import LightVisualize from './Components/Graphs/lightMode/Visualize';
 import DarkVisualize from './Components/Graphs/DarkMode/visualize';
 import Fab from '@mui/material/Fab';
 import NotFound from './Components/Account/notFound';
+import axios from 'axios';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -58,6 +59,7 @@ export default function ToggleColorMode() {
     [mode],
   );
 
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -65,7 +67,7 @@ export default function ToggleColorMode() {
           <Routes>
             <Route exact path="/" element={<>
               {/* <NavBar /> */}
-              <Signup />
+              <Login />
             </>} />
             <Route exact path="/login" element={<>
               {/* <NavBar /> */}

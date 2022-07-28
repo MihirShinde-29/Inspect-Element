@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import PersistentDrawerLeft from '../Account/sidebar'
 import addNotification from 'react-push-notification';
-import EnhancedTable from './Table'
-import { Chip, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
+import { EnhancedTable } from './Table'
+import { Chip, FormControlLabel, Radio, RadioGroup, Typography, Autocomplete, TextField } from '@mui/material'
 import { Link } from 'react-router-dom';
-import TablePending from './TableOther';
+import { TablePending } from './TableOther';
+import axios from 'axios';
 
 const TabLabel = ({ name, number, checked }) => {
   return (
@@ -25,6 +26,42 @@ const buttonClick = () => {
     native: true, // when using native, your OS will handle theming.
   });
 };
+
+const array = [
+  "Shipped",
+  "Ordered",
+  "Required"
+]
+
+const typeA = [
+  "Chemical",
+  "Other",
+  "Equipment",
+]
+
+function createData(id, name, quantity, price) {
+  return {
+    id,
+    name,
+    quantity,
+    type: typeA[Math.floor(Math.random() * typeA.length)],
+    price,
+    history: [
+      {
+        date: '2020-01-05',
+        customerId: '11091700',
+        amount: 3,
+      },
+      {
+        date: '2020-01-02',
+        customerId: 'Anonymous',
+        amount: 1,
+      },
+    ],
+    status: array[Math.floor(Math.random() * array.length)]
+
+  };
+}
 
 const Tabs = ({ checked, setChecked, tabs }) => {
 
@@ -48,22 +85,102 @@ const Tabs = ({ checked, setChecked, tabs }) => {
 }
 
 const Inventory = () => {
+  const [names, setNames] = useState([]);
+  const [search, setSearch] = useState('')
   const [checked, setChecked] = useState('All');
-  let tabs = {
-    'All': 23,
-    'Shipped': 11,
-    'Ordered': 3,
-    'Required': 13,
-  }
+  const [rows, setRows] = useState([]);
+  const [filteredData, setFilteredData] = useState([])
+  const [tabs, setTabs] = useState({
+    'All': 0,
+    'Shipped': 0,
+    'Ordered': 0,
+    'Required': 0,
+  })
+  useEffect(() => {
+    if(rows) {
+      let x = {
+        'All': 0,
+        'Shipped': 0,
+        'Ordered': 0,
+        'Required': 0,
+      }
+      let array = []
+      rows.map(row => {
+        x[row.status]++
+        x['All']++
+        array.push(row.name)
+      })
+      console.log(array)
+      setNames(array)
+      setTabs(x)
+    }
+  }, [rows])
+
+  useEffect(() => {
+    let x = rows.filter(row => {
+      if(search === '') {
+        return row
+      } else {
+        return row.name.toLowerCase().includes(search.toLowerCase())
+      }
+    })
+    setFilteredData(x)
+  }, [search])
+  
+  useEffect(() => {
+    axios.get("https://dummyjson.com/products")
+      .then((res) => {
+        console.log(res.data.products)
+        const data = res.data.products;
+        let array = [];
+        let x = {
+          'All': 0,
+          'Shipped': 0,
+          'Ordered': 0,
+          'Required': 0,
+        }
+        data.forEach((item) => {
+          let data = createData(item.id, item.title, item.stock, item.price)
+          array.push(data)
+          x[data.status]++
+          x['All']++
+        })
+        setTabs(x)
+        setRows(array)
+        setFilteredData(array)
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }, [])
   return (
     <Box sx={{ display: 'flex' }} >
       <PersistentDrawerLeft />
-      <Box sx={{ padding: 4, width: '100%' }}>
-        <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />
-        {checked === "All" ?
-          <EnhancedTable ckecked={checked} />
-          :
-          <TablePending ckecked={checked}/>
+      <Box sx={{ padding: 2, width: '100%' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0' }}>
+          <Typography variant='h3'>Inventory</Typography>
+          {names && 
+            <Autocomplete
+              inputValue={search}
+              onInputChange={(event, newInputValue) => {
+                setSearch(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={names}
+              sx={{width: 300}}
+              renderInput={(params) => <TextField {...params} label="Search" />}
+            />
+          }
+        </Box>
+        {rows && 
+          <div>
+            <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />
+            {checked === "All"  ?
+              <EnhancedTable checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
+              :
+              <TablePending checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
+            }
+          </div>
         }
       </Box>
     </Box >

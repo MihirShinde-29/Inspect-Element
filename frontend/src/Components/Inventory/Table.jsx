@@ -87,7 +87,8 @@ function createData(id, name, quantity, price) {
 
 
 function Row(props) {
-  const { row } = props;
+  const { row, setRows, rows } = props;
+  console.log(row)
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -110,30 +111,38 @@ function Row(props) {
         <StyledTableCell align="right">{row.price}</StyledTableCell>
         <StyledTableCell align="right">{row.status}</StyledTableCell>
         <StyledTableCell align="right"><Button size='small' color='error' variant='contained' onClick={(e) => {
-          var axios = require('axios');
+          // var axios = require('axios');
 
-          var config = {
-            method: 'delete',
-            url: `https://dummyjson.com/products/${row.id}`,
-            headers: {}
-          };
+          // var config = {
+          //   method: 'delete',
+          //   url: `https://dummyjson.com/products/${row.id}`,
+          //   headers: {}
+          // };
 
-          axios(config)
-            .then(function (response) {
-              console.log(JSON.stringify(response.data));
+          // axios(config)
+          //   .then(function (response) {
+          //     console.log(JSON.stringify(response.data));
 
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Data is deleted',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
+          //     Swal.fire({
+          //       position: 'top-end',
+          //       icon: 'success',
+          //       title: 'Data is deleted',
+          //       showConfirmButton: false,
+          //       timer: 1500
+          //     })
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          let array = rows.filter(item => item.id !== row.id)
+          setRows(array)
+          Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Data is deleted',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
         }}><DeleteForeverIcon /></Button></StyledTableCell>
       </StyledTableRow>
       <TableRow>
@@ -193,7 +202,8 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function CollapsibleTable() {
+export const EnhancedTable = ({checked, rows, setRows}) => {
+  console.log(rows)
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -203,32 +213,19 @@ export default function CollapsibleTable() {
   const handleClose = () => {
     setOpen(false);
   };
-  const [d, setD] = React.useState([]);
   const [items, setItems] = React.useState({
     name: "",
     price: "",
     quantity: "",
   });
-  React.useEffect(() => {
-    axios.get("https://dummyjson.com/products")
-      .then((res) => {
-        console.log(res.data.products);
-        setD(res.data.products);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-  }, [])
 
-  const rows = [];
-  console.log(d.length);
-  if (d.length !== 0) {
-    for (let i = 0; i < 20; i++) {
-      rows.push(createData(d[i].id, d[i].title, d[i].stock, d[i].price));
-    }
-  }
-  console.log(rows);
-  localStorage.setItem("Data", JSON.stringify(rows));
+  // const rows = [];
+  // console.log(d.length);
+  // if (d.length !== 0) {
+  //   for (let i = 0; i < 20; i++) {
+  //     rows.push(createData(d[i].id, d[i].title, d[i].stock, d[i].price));
+  //   }
+  // }
   const handleChanges = (event) => {
     setItems({
       ...items,
@@ -237,7 +234,7 @@ export default function CollapsibleTable() {
     console.log(items);
   };
   // res.data.products.map((e) => {
-  //   // return setRows(prevSelected => [...prevSelected, createData(e.title, e.stock, e.price)])
+  // return setRows(prevSelected => [...prevSelected, createData(e.title, e.stock, e.price)])
   //  rows.push(createData(e.title, e.stock, e.price))
   // })
   return (
@@ -268,6 +265,7 @@ export default function CollapsibleTable() {
                 name='name'
                 label="Item name"
                 type="text"
+                color='success'
                 fullWidth
                 onChange={handleChanges}
                 variant="standard"
@@ -277,6 +275,7 @@ export default function CollapsibleTable() {
                 autoFocus
                 margin="dense"
                 id="price"
+                color='success'
                 name='price'
                 onChange={handleChanges}
                 value={items.price}
@@ -289,6 +288,7 @@ export default function CollapsibleTable() {
               <TextField
                 autoFocus
                 margin="dense"
+                color='success'
                 onChange={handleChanges}
                 id="quantity"
                 name='quantity'
@@ -302,7 +302,7 @@ export default function CollapsibleTable() {
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={() => {
 
-                rows.push(createData(0, items.name, items.price, items.quantity));
+                setRows(prevState => [...prevState ,createData(0, items.name, items.price, items.quantity)]);
                 setOpen(false);
               }}>Submit</Button>
             </DialogActions>
@@ -319,7 +319,7 @@ export default function CollapsibleTable() {
             </TableRow>
           })} */}
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} row={row} setRows={setRows} rows={rows} />
           ))}
         </TableBody>
       </Table>
