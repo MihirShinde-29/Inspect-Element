@@ -4,8 +4,9 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
+import { styled } from '@mui/material/styles';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -26,31 +27,28 @@ const typeA = [
     "Equipment",
 ]
 
-function createData(name, quantity, price) {
-    return {
-        name,
-        quantity,
-        type: typeA[Math.floor(Math.random() * typeA.length)],
-        price,
-        history: [
-            {
-                date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
-            },
-            {
-                date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
-            },
-        ],
-        status: array[Math.floor(Math.random() * array.length)]
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: "#233329",
+        color: theme.palette.common.white,
+        fontSize: 20,
 
-    };
-}
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 18,
+    },
+}));
 
 
-
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 
 function Row(props) {
@@ -59,8 +57,8 @@ function Row(props) {
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
+            <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+                <StyledTableCell>
                     <IconButton
                         aria-label="expand row"
                         size="small"
@@ -68,15 +66,15 @@ function Row(props) {
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
-                </TableCell>
-                <TableCell component="th" scope="row">
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row">
                     {row.name}
-                </TableCell>
-                <TableCell align="right">{row.quantity}</TableCell>
-                <TableCell align="right">{row.type}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-            </TableRow>
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+                <StyledTableCell align="right">{row.type}</StyledTableCell>
+                <StyledTableCell align="right">{row.price}</StyledTableCell>
+                <StyledTableCell align="right">{row.status}</StyledTableCell>
+            </StyledTableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
@@ -142,20 +140,20 @@ export default function TablePending(r) {
             <Table stickyHeader aria-label="collapsible table">
                 <TableHead >
                     <TableRow >
-                        <TableCell style={{ backgroundColor: '#0275d8' }} />
-                        <TableCell align='center' style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Item</TableCell>
-                        <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Quantity</TableCell>
-                        <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Type</TableCell>
-                        <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Price</TableCell>
-                        <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Status</TableCell>
+                        <StyledTableCell />
+                        <StyledTableCell align='center'>Item</StyledTableCell>
+                        <StyledTableCell align="right" >Quantity</StyledTableCell>
+                        <StyledTableCell align="right" >Type</StyledTableCell>
+                        <StyledTableCell align="right" >Price</StyledTableCell>
+                        <StyledTableCell align="right" >Status</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        row.status === r.ckecked?
-                        <Row key={row.name} row={row} />
-                        :
-                        null
+                        row.status === r.ckecked ?
+                            <Row key={row.name} row={row} />
+                            :
+                            null
                     ))}
                 </TableBody>
             </Table>

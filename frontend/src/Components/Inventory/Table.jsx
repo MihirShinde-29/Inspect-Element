@@ -5,18 +5,25 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from "axios";
+import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import Swal from 'sweetalert2';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { TextField } from '@mui/material';
 const array = [
   "Shipped",
   "Ordered",
@@ -27,6 +34,29 @@ const typeA = [
   "Other",
   "Equipment",
 ]
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#233329",
+    color: theme.palette.common.white,
+    fontSize: 20,
+
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 18,
+  },
+}));
+
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 function createData(id, name, quantity, price) {
   return {
@@ -62,8 +92,8 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+      <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <StyledTableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -71,15 +101,15 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
+        </StyledTableCell>
+        <StyledTableCell component="th" scope="row">
           {row.name}
-        </TableCell>
-        <TableCell align="right">{row.quantity}</TableCell>
-        <TableCell align="right">{row.type}</TableCell>
-        <TableCell align="right">{row.price}</TableCell>
-        <TableCell align="right">{row.status}</TableCell>
-        <TableCell align="right"><Button size='small' color='error' variant='contained' onClick={(e) => {
+        </StyledTableCell>
+        <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+        <StyledTableCell align="right">{row.type}</StyledTableCell>
+        <StyledTableCell align="right">{row.price}</StyledTableCell>
+        <StyledTableCell align="right">{row.status}</StyledTableCell>
+        <StyledTableCell align="right"><Button size='small' color='error' variant='contained' onClick={(e) => {
           var axios = require('axios');
 
           var config = {
@@ -91,6 +121,7 @@ function Row(props) {
           axios(config)
             .then(function (response) {
               console.log(JSON.stringify(response.data));
+
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -103,8 +134,8 @@ function Row(props) {
               console.log(error);
             });
 
-        }}>Delete</Button></TableCell>
-      </TableRow>
+        }}><DeleteForeverIcon /></Button></StyledTableCell>
+      </StyledTableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -163,7 +194,21 @@ Row.propTypes = {
 };
 
 export default function CollapsibleTable() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const [d, setD] = React.useState([]);
+  const [items, setItems] = React.useState({
+    name: "",
+    price: "",
+    quantity: "",
+  });
   React.useEffect(() => {
     axios.get("https://dummyjson.com/products")
       .then((res) => {
@@ -184,6 +229,13 @@ export default function CollapsibleTable() {
   }
   console.log(rows);
   localStorage.setItem("Data", JSON.stringify(rows));
+  const handleChanges = (event) => {
+    setItems({
+      ...items,
+      [event.target.name]: event.target.value,
+    });
+    console.log(items);
+  };
   // res.data.products.map((e) => {
   //   // return setRows(prevSelected => [...prevSelected, createData(e.title, e.stock, e.price)])
   //  rows.push(createData(e.title, e.stock, e.price))
@@ -193,16 +245,68 @@ export default function CollapsibleTable() {
       <Table stickyHeader aria-label="collapsible table">
         <TableHead >
           <TableRow >
-            <TableCell style={{ backgroundColor: '#0275d8' }} ><Button color='success' variant='contained'>ADD</Button></TableCell>
-            <TableCell align='center' style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Item</TableCell>
-            <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Quantity</TableCell>
-            <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Type</TableCell>
-            <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Price</TableCell>
-            <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}>Status</TableCell>
-            <TableCell align="right" style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}></TableCell>
+            <StyledTableCell><Button color='success' onClick={handleClickOpen} variant='contained'>ADD</Button></StyledTableCell>
+            <StyledTableCell align='center' >Item</StyledTableCell>
+            <StyledTableCell align="right" >Quantity</StyledTableCell>
+            <StyledTableCell align="right">Type</StyledTableCell>
+            <StyledTableCell align="right">Price</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
+            <StyledTableCell align="right"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Inventory</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Add the Details :
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                name='name'
+                label="Item name"
+                type="text"
+                fullWidth
+                onChange={handleChanges}
+                variant="standard"
+                value={items.name}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="price"
+                name='price'
+                onChange={handleChanges}
+                value={items.price}
+                label="Price"
+                type="text"
+                variant="standard"
+              />
+              &nbsp;
+              &nbsp;
+              <TextField
+                autoFocus
+                margin="dense"
+                onChange={handleChanges}
+                id="quantity"
+                name='quantity'
+                value={items.quantity}
+                label="Quantity"
+                type="text"
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={() => {
+
+                rows.push(createData(0, items.name, items.price, items.quantity));
+                setOpen(false);
+              }}>Submit</Button>
+            </DialogActions>
+          </Dialog>
           {/* {d.map((e) => {
             var h = createData(e.title, e.stock, e.price)
             return <TableRow>
@@ -219,6 +323,13 @@ export default function CollapsibleTable() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 }
+
+// style={{
+//   backgroundColor: "#63d471",
+//   backgroundImage: "linear-gradient(315deg, #63d471 0%, #233329 74%)",
+//   fontSize: '1.2rem', fontWeight: '600'
+// }}
+// style={{ backgroundColor: '#0275d8', fontSize: '1.2rem', fontWeight: '600' }}

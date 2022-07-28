@@ -3,6 +3,7 @@
 /* :root { light mode */
 	/* --background-color: #ffffff;
 	--text-color: #292b2c;
+    g
 	--hilight-color: #0275d8;
 } */
 
@@ -68,6 +69,7 @@
 .Sales{
     /* width: 180px; */
     /* height: 180px; */
+    /* color: rgba(223, 248, 223, 0.669); */
     padding: 1%;
 }
 

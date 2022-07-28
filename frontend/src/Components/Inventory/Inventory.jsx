@@ -9,9 +9,9 @@ import TablePending from './TableOther';
 
 const TabLabel = ({ name, number, checked }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, background: `${checked === name ? 'white' : '#ecf2fe'}`, borderRadius: '10px 10px 0 0', padding: '10px 20px' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, background: `${checked === name ? 'white' : 'rgba(223, 248, 223, 0.669)'}`, borderRadius: '10px 10px 0 0', padding: '10px 20px' }}>
       <Typography variant='h6' sx={{ fontWeight: 600, color: `${checked === name ? 'black' : '#7c7f81'}` }}>{name}</Typography>
-      <Chip size='small' color={checked === name ? 'primary' : 'default'} label={number} />
+      <Chip size='small' color={checked === name ? 'success' : 'default'} label={number} />
     </Box>
   )
 }
@@ -34,11 +34,12 @@ const Tabs = ({ checked, setChecked, tabs }) => {
       <RadioGroup
         row
         value={checked}
+        
         onChange={(event) => setChecked(event.target.value)}
       >
         {tabsList.map((tab, index) =>
 
-          <FormControlLabel key={index} value={tab[0]} control={<Radio sx={{ visibility: 'hidden', width: 0 }}
+          <FormControlLabel key={index}  value={tab[0]} control={<Radio sx={{ visibility: 'hidden', width: 0 }}
             // onClick={buttonClick}
           />} label={<TabLabel name={tab[0]} checked={checked} number={tab[1]} />} />)}
       </RadioGroup>
@@ -70,3 +71,5 @@ const Inventory = () => {
 }
 
 export default Inventory
+
+// style={{backgroundColor:"#233329"}}
