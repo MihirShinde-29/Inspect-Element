@@ -74,10 +74,19 @@ const Login = () => {
         <div style={{ padding: '4%' }}>
             <Card>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                        <img src='https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg' alt="signup" style={{ width: "90%" }} />
+                    <Grid item xs={false}
+                        sm={4}
+                        md={6}
+                        sx={{
+                            backgroundImage:
+                                "url(https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg)",
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: "contain",
+                            backgroundPosition: "center",
+                        }}>
+                        {/* <img src='https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg' alt="signup" style={{ width: "90%" }} /> */}
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item md={6}>
                         <Grid container>
                             <Grid item xs={12} style={{ padding: "5vh", height: "87vh" }}>
                                 <form onSubmit={formik.handleSubmit} autoComplete="off" style={{ width: "100%" }}>
@@ -271,7 +280,7 @@ const Login = () => {
                 </Grid>
             </Card >
 
-        </div>
+        </div >
     )
 }
 

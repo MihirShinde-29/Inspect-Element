@@ -3,8 +3,9 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 const options = {
     chart: {
-        type: 'spline'
+        type: 'spline',
     },
+    
     title: {
         text: 'Most used items over the years'
     },
@@ -64,18 +65,35 @@ const options = {
             },
             chartOptions: {
                 legend: {
-                    layout: 'horizontal',
                     align: 'center',
-                    verticalAlign: 'bottom'
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
+                },
+                yAxis: {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -5
+                    },
+                    title: {
+                        text: null
+                    }
+                },
+                subtitle: {
+                    text: null
+                },
+                credits: {
+                    enabled: false
                 }
             }
         }]
     }
 
+
 }
 const Line = () => {
     return (
-        <div><HighchartsReact highcharts={Highcharts} options={options} /></div>
+        <div ><HighchartsReact highcharts={Highcharts} options={options} /></div>
 
     )
 }

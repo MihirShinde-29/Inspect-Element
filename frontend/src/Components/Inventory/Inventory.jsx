@@ -8,10 +8,11 @@ import { Link } from 'react-router-dom';
 import { TablePending } from './TableOther';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import "./inven.css"
 
 const TabLabel = ({ name, number, checked }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, background: `${checked === name ? 'white' : 'rgba(223, 248, 223, 0.669)'}`, borderRadius: '10px 10px 0 0', padding: '10px 20px' }}>
+    <Box classname="respInv" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, background: `${checked === name ? 'white' : 'rgba(223, 248, 223, 0.669)'}`, borderRadius: '10px 10px 0 0', padding: '10px 20px' }}>
       <Typography variant='h6' sx={{ fontWeight: 600, color: `${checked === name ? 'black' : '#7c7f81'}` }}>{name}</Typography>
       <Chip size='small' color={checked === name ? 'success' : 'default'} label={number} />
     </Box>

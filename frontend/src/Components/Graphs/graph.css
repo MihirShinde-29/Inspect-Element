@@ -73,3 +73,8 @@
     padding: 1%;
 }
 
+@media (max-width:600px) {
+    .resp{
+        display: none;
+    }
+}
