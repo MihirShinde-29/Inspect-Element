@@ -121,14 +121,16 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem key='Inventory' disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <InventoryIcon />
-              </ListItemIcon>
-              <ListItemText primary='Inventory' />
-            </ListItemButton>
-          </ListItem>
+          <Link to='/home' style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Inventory' disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InventoryIcon />
+                </ListItemIcon>
+                <ListItemText primary='Inventory' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
           <ListItem key='Chemicals' disablePadding>
             <ListItemButton>
               <ListItemIcon>

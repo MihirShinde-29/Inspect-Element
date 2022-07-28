@@ -132,9 +132,8 @@ Row.propTypes = {
     }).isRequired,
 };
 
-export default function TablePending(r) {
-    console.log(r.ckecked);
-    const rows = JSON.parse(localStorage.getItem("Data"));
+export const TablePending = ({ checked, rows, setRows }) => {
+    console.log(checked);
     return (
         <TableContainer sx={{ maxHeight: 540 }} component={Paper}>
             <Table stickyHeader aria-label="collapsible table">
@@ -150,7 +149,7 @@ export default function TablePending(r) {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        row.status === r.ckecked ?
+                        row.status === checked ?
                             <Row key={row.name} row={row} />
                             :
                             null
