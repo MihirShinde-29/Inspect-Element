@@ -29,15 +29,15 @@ function MyApp() {
   return (
 
     // <Fab size="medium" color="inherit"aria-label="add">
-      <IconButton onClick={colorMode.toggleColorMode} color="inherit"  style={{ float: 'right', margin: '8px' }} >
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+    <IconButton onClick={colorMode.toggleColorMode} color="inherit" style={{ float: 'right', margin: '8px' }} >
+      {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
     // </Fab>
   );
 }
 
 export default function ToggleColorMode() {
-  const [mode, setMode] = React.useState('light');
+  const [mode, setMode] = React.useState('dark');
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -61,36 +61,54 @@ export default function ToggleColorMode() {
 
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<>
-              {/* <NavBar /> */}
-              <Login />
-            </>} />
-            <Route exact path="/login" element={<>
-              {/* <NavBar /> */}
-              <Login />
-            </>} />
-            <Route path="/Profile" element={<>
+
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<>
+          {/* <NavBar /> */}
+          <Signup />
+        </>} />
+        <Route exact path="/login" element={<>
+          {/* <NavBar /> */}
+          <Login />
+        </>} />
+        <Route path="/Profile" element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
               <MyApp />
-              <Profilepage /></>} />
-            <Route path='/visualize' element={<>
+              <Profilepage />
+            </ThemeProvider>
+          </ColorModeContext.Provider></>} />
+        <Route path='/visualize' element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
               <MyApp />
               <SideBar />
               {mode === "light" ? <LightVisualize /> :
                 <DarkVisualize />}
-            </>}></Route>
-            <Route path="/home" element={<>
+            </ThemeProvider>
+          </ColorModeContext.Provider>
+        </>}></Route>
+        <Route path="/home" element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
               <MyApp />
               <Inventory />
-            </>} />
-            <Route path='/index.html' ></Route>
-            <Route path="/*" element={<center><NotFound /></center>} />
-          </Routes>
-        </Router>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+            </ThemeProvider >
+          </ColorModeContext.Provider >
+        </>} />
+        <Route path="/home/:id" element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+              <MyApp />
+              <Inventory />
+            </ThemeProvider >
+          </ColorModeContext.Provider >
+        </>} />
+        <Route path='/index.html' ></Route>
+        <Route path="/*" element={<center><NotFound /></center>} />
+      </Routes >
+    </Router >
+
   );
 }

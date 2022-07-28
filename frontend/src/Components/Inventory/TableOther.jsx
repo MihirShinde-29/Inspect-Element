@@ -132,7 +132,7 @@ Row.propTypes = {
     }).isRequired,
 };
 
-export const TablePending = ({ checked, rows, setRows }) => {
+export const TablePending = ({ type, checked, rows, setRows }) => {
     console.log(checked);
     return (
         <TableContainer sx={{ maxHeight: 540 }} component={Paper}>
@@ -149,10 +149,16 @@ export const TablePending = ({ checked, rows, setRows }) => {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        row.status === checked ?
-                            <Row key={row.name} row={row} />
+                        type != null ?
+                            (row.type == type && row.status === checked?
+                                <Row key={row.name} row={row} setRows={setRows} rows={rows} />
+                                :
+                                null)
                             :
-                            null
+                            (row.status === checked ?
+                                <Row key={row.name} row={row} />
+                                :
+                                null)
                     ))}
                 </TableBody>
             </Table>

@@ -88,7 +88,6 @@ function createData(id, name, quantity, price) {
 
 function Row(props) {
   const { row, setRows, rows } = props;
-  console.log(row)
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -109,7 +108,17 @@ function Row(props) {
         <StyledTableCell align="right">{row.quantity}</StyledTableCell>
         <StyledTableCell align="right">{row.type}</StyledTableCell>
         <StyledTableCell align="right">{row.price}</StyledTableCell>
-        <StyledTableCell align="right">{row.status}</StyledTableCell>
+        <StyledTableCell align="right">
+
+          {row.status === "Shipped" ?
+            <Button color='success'>{row.status}</Button>
+            :
+            row.status === "Ordered" ?
+              <Button color='warning'>{row.status}</Button>
+              :
+              <Button color='error'>{row.status}</Button>
+          }
+        </StyledTableCell>
         <StyledTableCell align="right"><Button size='small' color='error' variant='contained' onClick={(e) => {
           // var axios = require('axios');
 
@@ -137,12 +146,12 @@ function Row(props) {
           let array = rows.filter(item => item.id !== row.id)
           setRows(array)
           Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Data is deleted',
-                  showConfirmButton: false,
-                  timer: 1500
-                })
+            position: 'top-end',
+            icon: 'success',
+            title: 'Data is deleted',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }}><DeleteForeverIcon /></Button></StyledTableCell>
       </StyledTableRow>
       <TableRow>
@@ -202,7 +211,7 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export const EnhancedTable = ({checked, rows, setRows}) => {
+export const EnhancedTable = ({ type,checked, rows, setRows }) => {
   console.log(rows)
   const [open, setOpen] = React.useState(false);
 
@@ -242,11 +251,11 @@ export const EnhancedTable = ({checked, rows, setRows}) => {
       <Table stickyHeader aria-label="collapsible table">
         <TableHead >
           <TableRow >
-            <StyledTableCell><Button color='success' onClick={handleClickOpen} variant='contained'>ADD</Button></StyledTableCell>
+            <StyledTableCell><Button color='success' size='large' onClick={handleClickOpen} variant='contained'>ADD</Button></StyledTableCell>
             <StyledTableCell align='center' >Item</StyledTableCell>
             <StyledTableCell align="right" >Quantity</StyledTableCell>
             <StyledTableCell align="right">Type</StyledTableCell>
-            <StyledTableCell align="right">Price</StyledTableCell>
+            <StyledTableCell align="right">Price($)</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right"></StyledTableCell>
           </TableRow>
@@ -302,8 +311,11 @@ export const EnhancedTable = ({checked, rows, setRows}) => {
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={() => {
 
-                setRows(prevState => [...prevState ,createData(0, items.name, items.price, items.quantity)]);
+                setRows(prevState => [...prevState, createData(0, items.name, items.price, items.quantity)]);
                 setOpen(false);
+                Swal.fire(
+                  "Added Successfully at the end"
+                )
               }}>Submit</Button>
             </DialogActions>
           </Dialog>
@@ -319,6 +331,12 @@ export const EnhancedTable = ({checked, rows, setRows}) => {
             </TableRow>
           })} */}
           {rows.map((row) => (
+            type!=null?
+            (row.type == type?
+            <Row key={row.name} row={row} setRows={setRows} rows={rows} />
+            :
+            null)
+            :
             <Row key={row.name} row={row} setRows={setRows} rows={rows} />
           ))}
         </TableBody>

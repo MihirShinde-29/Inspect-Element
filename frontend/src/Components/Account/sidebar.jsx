@@ -131,22 +131,26 @@ export default function PersistentDrawerLeft() {
               </ListItemButton>
             </ListItem>
           </Link>
-          <ListItem key='Chemicals' disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ScienceIcon />
-              </ListItemIcon>
-              <ListItemText primary='Chemicals' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key='Equipments' disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ScienceIcon />
-              </ListItemIcon>
-              <ListItemText primary='Equipments' />
-            </ListItemButton>
-          </ListItem>
+          <Link to="/home/Chemical" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Chemicals' disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ScienceIcon />
+                </ListItemIcon>
+                <ListItemText primary='Chemicals' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to="/home/Equipment" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Equipments' disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ScienceIcon />
+                </ListItemIcon>
+                <ListItemText primary='Equipments' />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         </List>
         <Divider />
         <List>
@@ -161,7 +165,7 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           </Link>
 
-          <Link to="/pending" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <a target="_blank" href="https://bhumika-1-3.github.io/TODO_inspect/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItem key='Pending' disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -170,7 +174,7 @@ export default function PersistentDrawerLeft() {
                 <ListItemText primary='Pending' />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </a>
 
           <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItem key='Logout' style={{ color: 'red' }} disablePadding>

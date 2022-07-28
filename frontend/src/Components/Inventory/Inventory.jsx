@@ -7,6 +7,7 @@ import { Chip, FormControlLabel, Radio, RadioGroup, Typography, Autocomplete, Te
 import { Link } from 'react-router-dom';
 import { TablePending } from './TableOther';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const TabLabel = ({ name, number, checked }) => {
   return (
@@ -153,6 +154,9 @@ const Inventory = () => {
         console.log(e);
       })
   }, [])
+
+  const {id} = useParams();
+  console.log(id);
   return (
     <Box sx={{ display: 'flex' }} >
       <PersistentDrawerLeft />
@@ -161,6 +165,7 @@ const Inventory = () => {
           <Typography variant='h3'>Inventory</Typography>
           {names && 
             <Autocomplete
+              
               inputValue={search}
               onInputChange={(event, newInputValue) => {
                 setSearch(newInputValue);
@@ -168,7 +173,7 @@ const Inventory = () => {
               id="controllable-states-demo"
               options={names}
               sx={{width: 300}}
-              renderInput={(params) => <TextField {...params} label="Search" />}
+              renderInput={(params) => <TextField color='success' {...params} label="Search" />}
             />
           }
         </Box>
@@ -176,9 +181,9 @@ const Inventory = () => {
           <div>
             <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />
             {checked === "All"  ?
-              <EnhancedTable checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
+              <EnhancedTable type={id} checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
               :
-              <TablePending checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
+              <TablePending type={id} checked={checked} rows={search ? filteredData : rows} setRows={setRows} />
             }
           </div>
         }
