@@ -159,13 +159,13 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           </Link>
 
-          <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItem key='Invoices' disablePadding>
+          <Link to="/pending" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key='Pending' disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <ReceiptIcon></ReceiptIcon>
                 </ListItemIcon>
-                <ListItemText primary='Invoices' />
+                <ListItemText primary='Pending' />
               </ListItemButton>
             </ListItem>
           </Link>

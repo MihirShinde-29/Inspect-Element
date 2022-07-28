@@ -30,7 +30,7 @@ const Tabs = ({ checked, setChecked, tabs }) => {
 
   let tabsList = Object.entries(tabs)
   return (
-    <Box>
+    <Box >
       <RadioGroup
         row
         value={checked}
@@ -56,7 +56,7 @@ const Inventory = () => {
     'Required': 13,
   }
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} >
       <PersistentDrawerLeft />
       <Box sx={{ padding: 4, width: '100%' }}>
         <Tabs checked={checked} setChecked={setChecked} tabs={tabs} />

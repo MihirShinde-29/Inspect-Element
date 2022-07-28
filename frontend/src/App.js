@@ -27,11 +27,11 @@ function MyApp() {
   const colorMode = React.useContext(ColorModeContext);
   return (
 
-    <Fab size="medium" color="inherit" style={{ float: 'right', margin: '8px' }} aria-label="add">
-      <IconButton onClick={colorMode.toggleColorMode} color="inherit">
+    // <Fab size="medium" color="inherit"aria-label="add">
+      <IconButton onClick={colorMode.toggleColorMode} color="inherit"  style={{ float: 'right', margin: '8px' }} >
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
-    </Fab>
+    // </Fab>
   );
 }
 
@@ -47,6 +47,7 @@ export default function ToggleColorMode() {
   );
 
   console.log(mode);
+  localStorage.setItem("mode", mode);
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -83,6 +84,7 @@ export default function ToggleColorMode() {
               <MyApp />
               <Inventory />
             </>} />
+            <Route path='/index.html' ></Route>
             <Route path="/*" element={<center><NotFound /></center>} />
           </Routes>
         </Router>
