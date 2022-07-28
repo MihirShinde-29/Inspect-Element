@@ -77,6 +77,11 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
+  React.useEffect(() => {
+    setOpen(theme.breakpoints.up('md'));
+  }, [theme.breakpoints])
+  
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };

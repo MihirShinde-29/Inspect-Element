@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import PersistentDrawerLeft from '../Account/sidebar'
 import addNotification from 'react-push-notification';
 import { EnhancedTable } from './Table'
-import { Chip, FormControlLabel, Radio, RadioGroup, Typography, Autocomplete, TextField } from '@mui/material'
+import { Chip, FormControlLabel, Radio, RadioGroup, Typography, Autocomplete, TextField, useTheme } from '@mui/material'
 import { Link } from 'react-router-dom';
 import { TablePending } from './TableOther';
 import axios from 'axios';
@@ -87,6 +87,7 @@ const Tabs = ({ checked, setChecked, tabs }) => {
 }
 
 const Inventory = () => {
+  const theme = useTheme();
   const [names, setNames] = useState([]);
   const [search, setSearch] = useState('')
   const [checked, setChecked] = useState('All');
@@ -163,7 +164,7 @@ const Inventory = () => {
       <PersistentDrawerLeft />
       <Box sx={{ padding: 2, width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0' }}>
-          <Typography variant='h3'>Inventory</Typography>
+          <Typography variant={theme.breakpoints.up('md') ? 'h3' : 'h5'}>Inventory</Typography>
           {names && 
             <Autocomplete
               
@@ -174,7 +175,7 @@ const Inventory = () => {
               id="controllable-states-demo"
               options={names}
               sx={{width: 300}}
-              renderInput={(params) => <TextField color='success' {...params} label="Search" />}
+              renderInput={(params) => <TextField color='success' size={theme.breakpoints.up('md') ? 'medium' : 'small'} {...params} label="Search" />}
             />
           }
         </Box>
