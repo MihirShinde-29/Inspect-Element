@@ -20,7 +20,7 @@ app.use(cookieParser());
 // apis
 app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login"));
-
+app.use("/todo",require("./routes/todo"));
 
 mongoose.connection.once("open", () => {
     console.log("connected db");

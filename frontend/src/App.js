@@ -20,6 +20,8 @@ import DarkVisualize from './Components/Graphs/DarkMode/visualize';
 import Fab from '@mui/material/Fab';
 import NotFound from './Components/Account/notFound';
 import axios from 'axios';
+import Todo from './Components/todoR/todo';
+import DragAndDropList from './Components/todoR/Draggable';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -105,7 +107,16 @@ export default function ToggleColorMode() {
             </ThemeProvider >
           </ColorModeContext.Provider >
         </>} />
-        <Route path='/index.html' ></Route>
+        <Route path='/todo' element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+              <MyApp />
+              <SideBar />
+              {/* <DragAndDropList/> */}
+              <Todo />
+            </ThemeProvider >
+          </ColorModeContext.Provider >
+        </>} ></Route>
         <Route path="/*" element={<center><NotFound /></center>} />
       </Routes >
     </Router >

@@ -281,7 +281,6 @@ export const EnhancedTable = ({ type,checked, rows, setRows }) => {
                 value={items.name}
               />
               <TextField
-                autoFocus
                 margin="dense"
                 id="price"
                 color='success'
@@ -295,7 +294,6 @@ export const EnhancedTable = ({ type,checked, rows, setRows }) => {
               &nbsp;
               &nbsp;
               <TextField
-                autoFocus
                 margin="dense"
                 color='success'
                 onChange={handleChanges}
@@ -308,8 +306,8 @@ export const EnhancedTable = ({ type,checked, rows, setRows }) => {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={() => {
+              <Button color='error' onClick={handleClose}>Cancel</Button>
+              <Button color='success' onClick={() => {
 
                 setRows(prevState => [...prevState, createData(0, items.name, items.price, items.quantity)]);
                 setOpen(false);

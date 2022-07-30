@@ -80,7 +80,7 @@ export default function PersistentDrawerLeft() {
   React.useEffect(() => {
     setOpen(theme.breakpoints.up('md'));
   }, [theme.breakpoints])
-  
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -170,7 +170,8 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           </Link>
 
-          <a target="_blank" href="https://bhumika-1-3.github.io/TODO_inspect/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          {/* <a target="_blank" href="https://bhumika-1-3.github.io/TODO_inspect/" style={{ textDecoration: 'none', color: 'inherit' }}> */}
+          <Link to="/todo" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItem key='Pending' disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -179,7 +180,8 @@ export default function PersistentDrawerLeft() {
                 <ListItemText primary='Pending' />
               </ListItemButton>
             </ListItem>
-          </a>
+          </Link>
+          {/* </a> */}
 
           <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
             <ListItem key='Logout' style={{ color: 'red' }} disablePadding>
