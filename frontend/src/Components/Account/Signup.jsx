@@ -127,7 +127,7 @@ const Signup = () => {
 
       var config = {
         method: 'post',
-        url: 'http://localhost:3500/register',
+        url: 'https://inspectbackend.herokuapp.com/register',
         headers: {
           'Content-Type': 'application/json'
         },
