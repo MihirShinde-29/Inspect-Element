@@ -100,7 +100,7 @@ const ListItem = ({ item, provided, snapshot, type }) => {
 
                                 var config = {
                                     method: 'delete',
-                                    url: 'http://localhost:3500/todo',
+                                    url: 'https://inspectbackend.herokuapp.com/todo',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
@@ -187,7 +187,7 @@ const ListItem = ({ item, provided, snapshot, type }) => {
 
                                     var config = {
                                         method: 'put',
-                                        url: 'http://localhost:3500/todo',
+                                        url: 'https://inspectbackend.herokuapp.com/todo',
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
