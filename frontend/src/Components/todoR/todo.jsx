@@ -108,7 +108,7 @@ const Todo = () => {
 
                             var config = {
                                 method: 'post',
-                                url: 'http://localhost:3500/todo',
+                                url: 'https://inspectbackend.herokuapp.com/todo',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
