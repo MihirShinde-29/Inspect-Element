@@ -14,6 +14,7 @@ import {
     InputLabel,
     MenuItem,
     FormHelperText,
+    Box,
 } from "@mui/material";
 import axios from "axios";
 import EmailIcon from "@mui/icons-material/Email";
@@ -22,7 +23,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { motion } from "framer-motion";
-
+import image from '../../Images/Login.png';
 import Card from '@mui/material/Card'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Swal from "sweetalert2";
@@ -71,20 +72,14 @@ const Login = () => {
     const history = useNavigate();
 
     return (
-        <div style={{ padding: '4%' }}>
+        <Box sx={{ padding: '4%' }}>
             <Card>
                 <Grid container spacing={3}>
                     <Grid item xs={false}
+                        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
                         sm={4}
-                        md={6}
-                        sx={{
-                            backgroundImage:
-                                "url(https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg)",
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "contain",
-                            backgroundPosition: "center",
-                        }}>
-                        {/* <img src='https://i.pinimg.com/564x/32/b0/46/32b046eb35b34633ef1a6421af843cf9.jpg' alt="signup" style={{ width: "90%" }} /> */}
+                        md={6}>
+                        <img src={image} alt="signup" style={{ width: "70%" }} />
                     </Grid>
                     <Grid item md={6}>
                         <Grid container>
@@ -280,7 +275,7 @@ const Login = () => {
                 </Grid>
             </Card >
 
-        </div >
+        </Box>
     )
 }
 

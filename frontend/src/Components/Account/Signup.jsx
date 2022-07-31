@@ -52,6 +52,7 @@ import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { FormatAlignLeftSharp } from "@mui/icons-material";
+import image from '../../Images/Login.png';
 // import { url } from '../url.js'
 
 const validationSchema = yup.object({
@@ -153,16 +154,10 @@ const Signup = () => {
       <Card>
         <Grid container spacing={3} style={{ overflow: "hidden" }}>
           <Grid item xs={false}
+            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             sm={4}
-            md={6}
-            sx={{
-              backgroundImage:
-                "url(https://i.pinimg.com/564x/9e/7d/bc/9e7dbcad84578f85fcda8770ccbd024a.jpg)",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-            }}>
-            {/* <img src="https://i.pinimg.com/564x/9e/7d/bc/9e7dbcad84578f85fcda8770ccbd024a.jpg" alt="signup" style={{ width: "90%" }} /> */}
+            md={6}>
+            <img src={image} alt="signup" style={{ width: "70%" }} />
           </Grid>
           <Grid item md={6}>
             <Grid container>
