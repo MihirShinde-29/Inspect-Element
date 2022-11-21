@@ -7,20 +7,22 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-
-    password :{
+    profile: {
+        type: String,
+    },
+    password: {
         type: String,
         required: true,
     },
 
-    secretName : {
-        type : String,
-        required : true,
+    email: {
+        type: String,
+        required: true,
     },
 
 
-    refreshToken : String
+    refreshToken: String
 
 });
 
-module.exports = mongoose.model("User",userSchema)
+module.exports = mongoose.model("User", userSchema)

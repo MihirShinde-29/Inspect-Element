@@ -22,6 +22,10 @@ import NotFound from './Components/Account/notFound';
 import axios from 'axios';
 import Todo from './Components/todoR/todo';
 import DragAndDropList from './Components/todoR/Draggable';
+import PasswordChange from './Components/Account/PasswordChange';
+import Payment from './Components/Payment/Payment';
+import PaymentGetway from './Components/Payment/PaymentGetway';
+import Dashboard from './Components/internship/Dashboard';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 function MyApp() {
@@ -66,21 +70,22 @@ export default function ToggleColorMode() {
 
     <Router>
       <Routes>
+        <Route path='/payment' element={<PaymentGetway />} />
         <Route exact path="/" element={<>
           {/* <NavBar /> */}
-          <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-              <Signup />
-            </ThemeProvider>
-          </ColorModeContext.Provider>
+          {/* <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}> */}
+          <Signup />
+          {/* </ThemeProvider>
+          </ColorModeContext.Provider> */}
         </>} />
         <Route exact path="/login" element={<>
           {/* <NavBar /> */}
-          <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-              <Login />
-            </ThemeProvider>
-          </ColorModeContext.Provider>
+          {/* <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}> */}
+          <Login />
+          {/* </ThemeProvider>
+          </ColorModeContext.Provider> */}
         </>} />
         <Route path="/Profile" element={<>
           <ColorModeContext.Provider value={colorMode}>
@@ -125,6 +130,13 @@ export default function ToggleColorMode() {
             </ThemeProvider >
           </ColorModeContext.Provider >
         </>} ></Route>
+        <Route path="/changepassword/:mail" element={<PasswordChange />}></Route>
+        <Route path='/internship' element={<>
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+              <Dashboard />
+            </ThemeProvider></ColorModeContext.Provider>
+        </>}></Route>
         <Route path="/*" element={<center><NotFound /></center>} />
       </Routes >
     </Router >

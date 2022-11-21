@@ -2,12 +2,14 @@ const User = require("../model/User")
 // to encrypt passwords
 const bscrypt = require("bcrypt");
 
+
 const registerNewUser = async (req, res) => {
-    const { username, password , secretName } = req.body;
-    if (!username || !password || !secretName) return res.status(400).json({ "Message": "Invalid cred" });
+    const profile = (req.file) ? req.file.filename : null;
+    const { username, password, email } = req.body;
+    if (!username || !password || !email) return res.status(400).json({ "Message": "Invalid cred" });
 
     // check for duplicate usernames
-    const duplicate = await User.findOne({ username: username }).exec();
+    const duplicate = await User.findOne({ email: email }).exec();
 
     if (duplicate) return res.status(409).json({ "message": "User already exist" });
     try {
@@ -19,10 +21,11 @@ const registerNewUser = async (req, res) => {
         const result = await User.create({
             "username": username,
             "password": hashpwd,
-            "secretName" :secretName
+            "email": email,
+            "profile":profile
         });
-   
-// ------------------other ---------------
+
+        // ------------------other ---------------
         // const newUser = new User();
         // registerNewUser.username = ... 
         // const result = await newUser.save()

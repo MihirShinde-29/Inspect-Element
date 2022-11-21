@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { useEffect } from "react";
+import { gapi } from 'gapi-script';
 import {
     Grid,
     TextField,
@@ -16,6 +17,7 @@ import {
     FormHelperText,
     Box,
 } from "@mui/material";
+import { GoogleLogin } from 'react-google-login';
 import axios from "axios";
 import EmailIcon from "@mui/icons-material/Email";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -36,16 +38,6 @@ import * as yup from 'yup';
 import { Link } from "react-router-dom";
 import { FormatAlignLeftSharp } from "@mui/icons-material";
 
-const validationSchema = yup.object({
-    username: yup
-        .string('Enter your username')
-        .required('username is required'),
-    password: yup
-        .string('Enter your password')
-        .min(5, 'Password is too short')
-        .required('Password is required'),
-
-});
 
 const theme = createTheme();
 
@@ -56,27 +48,61 @@ const Login = () => {
     useEffect(() => {
         onTop();
     }, []);
-    const formik = useFormik({
-        initialValues: {
-            username: '',
-            password: '',
-        },
-        validationSchema: validationSchema,
-        onSubmit: (values) => {
-            console.log(values);
-        },
-    });
+
+    useEffect(() => {
+        function start() {
+            gapi.client.init({
+                clientId: "537010121754-h774kl4n7hd7ncg3ili9svdffrch9hmb.apps.googleusercontent.com",
+                scope: 'email',
+            });
+        }
+
+        gapi.load('client:auth2', start);
+    }, []);
+
+
     const [passwordShow, setpassword] = React.useState(false);
     const [username, setUsername] = React.useState("");
 
     const history = useNavigate();
+    const [values, setValues] = React.useState({
+        "password": "",
+        "email": "",
+    });
+    const inputChangeHandler = (e) => {
+        setValues((prev) => {
+            return {
+                ...prev,
+                [e.target.name]: e.target.value,
+            }
+        })
+    }
 
+    const onSuccess = response => {
+        console.log('SUCCESS', response);
+        axios({
+            method: "POST",
+            url: "http://localhost:3500/login/googleauth",
+            data: { tokenId: response.tokenId }
+        })
+            .then((res) => {
+                console.log(res.data);
+                history("/home");
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    };
+    const onFailure = response => {
+        alert("failed");
+        console.log('FAILED', response);
+    };
     return (
         <Box sx={{ padding: '4%' }}>
             <Card>
                 <Grid container spacing={3}>
                     <Grid item xs={false}
-                        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         sm={4}
                         md={6}>
                         <img src={image} alt="signup" style={{ width: "70%" }} />
@@ -84,7 +110,7 @@ const Login = () => {
                     <Grid item md={6}>
                         <Grid container>
                             <Grid item xs={12} style={{ padding: "5vh", height: "87vh" }}>
-                                <form onSubmit={formik.handleSubmit} autoComplete="off" style={{ width: "100%" }}>
+                                <form autoComplete="off" style={{ width: "100%" }}>
                                     <Grid container spacing={3}>
                                         <Grid item xs={12} sx={{ textAlign: "left", fontSize: "1.6rem", fontWeight: "750" }}>
                                             Login
@@ -95,13 +121,11 @@ const Login = () => {
                                         <Grid item xs={12} sm={12} md={12}>
                                             <TextField
                                                 fullWidth
-                                                id="username"
-                                                name="username"
-                                                label="Username"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
-                                                error={formik.touched.username && Boolean(formik.errors.username)}
-                                                helperText={formik.touched.username && formik.errors.username}
+                                                id="email"
+                                                name="email"
+                                                label="Email"
+                                                value={values.email}
+                                                onChange={inputChangeHandler}
                                                 InputLabelProps={{ style: { fontSize: 20 } }}
                                                 InputProps={{
                                                     style: { fontSize: 25 }
@@ -116,10 +140,8 @@ const Login = () => {
                                                     name="password"
                                                     label="Password"
                                                     type={passwordShow ? "text" : "password"}
-                                                    value={formik.values.password}
-                                                    onChange={formik.handleChange}
-                                                    error={formik.touched.password && Boolean(formik.errors.password)}
-                                                    helperText={formik.touched.password && formik.errors.password}
+                                                    value={values.password}
+                                                    onChange={inputChangeHandler}
                                                     InputLabelProps={{ style: { fontSize: 20 } }}
 
                                                     InputProps={{
@@ -161,19 +183,11 @@ const Login = () => {
                                                     textShadow: "0 0 8px rgb(255,255,255)",
                                                     transition: { duration: 0.3 },
                                                 }}
-                                                onClick={(values) => {
-                                                    history("/home");
-                                                    if (username === "Jesse" || "Walter") {
-                                                        // role -> can update inventory
-                                                        localStorage.setItem("role", "1");
-                                                    }
-                                                    else {
-                                                        localStorage.setItem("role", "0");
+                                                onClick={() => {
 
-                                                    }
                                                     var axios = require('axios');
                                                     var data = JSON.stringify({
-                                                        "username": values.username,
+                                                        "email": values.email,
                                                         "password": values.password,
                                                     });
 
@@ -181,7 +195,7 @@ const Login = () => {
 
                                                     var config = {
                                                         method: 'post',
-                                                        url: 'https://inspectbackend.herokuapp.com/login',
+                                                        url: 'http://localhost:3500/login',
                                                         headers: {
                                                             'Content-Type': 'application/json'
                                                         },
@@ -190,6 +204,7 @@ const Login = () => {
                                                     axios(config)
                                                         .then(function (response) {
                                                             console.log(JSON.stringify(response.data));
+                                                            history("/home");
                                                         })
                                                         .catch(function (error) {
                                                             console.log(error);
@@ -212,7 +227,6 @@ const Login = () => {
 
                                                 style={{ marginBottom: "3vh" }}
                                                 onClick={() => {
-                                                    console.log("hiii")
                                                     Swal.fire({
                                                         title: "Input your email ",
                                                         input: "text",
@@ -222,21 +236,22 @@ const Login = () => {
                                                             if (!num) {
                                                                 return "You need to write something!";
                                                             } else if (num) {
-                                                                var FormData = require("form-data");
-                                                                var mail = new FormData();
-                                                                mail.append("email", num);
+
                                                                 var config2 = {
                                                                     method: "post",
-                                                                    data: mail,
+                                                                    url: 'http://localhost:3500/forgotpw/email',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json'
+                                                                    },
+                                                                    data: JSON.stringify({
+                                                                        "email": num,
+                                                                    }),
                                                                 };
                                                                 axios(config2)
                                                                     .then(function (response) {
                                                                         console.log(JSON.stringify(response.data));
-                                                                        Swal.fire({
-                                                                            title: "We have sent a link to your mail",
-                                                                            icon: "success",
-                                                                        });
-                                                                        <Link to="/dashboard" />
+
+                                                                        history(`/changepassword/${num}`);
                                                                     })
                                                                     .catch((e) => {
                                                                         Swal.fire({
@@ -255,6 +270,7 @@ const Login = () => {
                                                     transition: { duration: 0.3 },
                                                 }}
                                             >
+
                                                 <Link
                                                     to="#"
                                                     style={{
@@ -266,6 +282,17 @@ const Login = () => {
                                                     Forgot Password ?
                                                 </Link>
                                             </Button>
+                                            <center>
+
+                                                <GoogleLogin
+                                                    fullWidth
+                                                    clientId="537010121754-h774kl4n7hd7ncg3ili9svdffrch9hmb.apps.googleusercontent.com"
+                                                    buttonText="Login with Google"
+                                                    onSuccess={onSuccess}
+                                                    onFailure={onFailure}
+                                                    cookiePolicy={'single_host_origin'}
+                                                />
+                                            </center>
                                         </Grid>
                                     </Grid>
                                 </form>

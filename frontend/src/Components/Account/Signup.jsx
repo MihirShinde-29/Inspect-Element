@@ -21,6 +21,9 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 // import signup from '../Images/signup.jpg';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -52,9 +55,9 @@ import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { FormatAlignLeftSharp } from "@mui/icons-material";
+
 import image from '../../Images/Login.png';
 // import { url } from '../url.js'
-
 const validationSchema = yup.object({
   secretName: yup
     .string('Enter your secret name')
@@ -105,6 +108,11 @@ const Signup = () => {
   const onTop = () => {
     window.scrollTo(0, 0);
   };
+  const [profile,setProfile] = React.useState("");
+  const imageUpload = (e) => {
+    console.log(e.target.files[0]);
+    setProfile(e.target.files[0]);
+  }
   useEffect(() => {
     onTop();
   }, []);
@@ -117,44 +125,61 @@ const Signup = () => {
       confirmpass: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      console.log(values);
       localStorage.setItem("Name", values.firstname + " " + values.lastname);
       var axios = require('axios');
-      var data = JSON.stringify({
-        "username": values.firstname + " " + values.lastname,
-        "password": values.password,
-        "secretName": values.secretName,
-      });
+      const formdata = new FormData();
+      formdata.append("username", values.firstname + " " + values.lastname);
+      formdata.append("password", values.password);
+      formdata.append("email", values.secretName);
+      formdata.append("profile", profile);
+      // var data = JSON.stringify({
+      //   "username": values.firstname + " " + values.lastname,
+      //   "password": values.password,
+      //   "email": values.secretName,
+      // });
 
-      var config = {
-        method: 'post',
-        url: 'https://inspectbackend.herokuapp.com/register',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: data
-      };
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      history('/login')
+      // var config = {
+      //   method: 'post',
+      //   url: 'http://localhost:3500/register',
+      //   // url: 'https://inspectbackend.herokuapp.com/register',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   data: data
+      // };
+      try {
+        let response = await axios.post('http://localhost:3500/register', formdata)
+        if (response.status == 201) {
+          toast.success("User added");
+
+          setTimeout(() => {
+            history("/login");
+          }, 1500)
+
+        }
+
+      } catch (err) {
+        console.log(err);
+        toast.error("Something went wrong")
+      }
+
     },
   });
 
   const [passwordShow, setpassword] = React.useState(false);
   const [passwordShow2, setpassword2] = React.useState(false);
+
   // definition
 
   return (
     <div style={{ padding: '4%' }}>
+      <ToastContainer />
       <Card>
         <Grid container spacing={3} style={{ overflow: "hidden" }}>
           <Grid item xs={false}
-            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             sm={4}
             md={6}>
             <img src={image} alt="signup" style={{ width: "70%" }} />
@@ -201,7 +226,7 @@ const Signup = () => {
                         fullWidth
                         id="secretName"
                         name="secretName"
-                        label="Code name"
+                        label="Email"
                         value={formik.values.secretName}
                         onChange={formik.handleChange}
                         error={formik.touched.secretName && Boolean(formik.errors.secretName)}
@@ -281,7 +306,17 @@ const Signup = () => {
                         </Grid>
 
                       </Grid>
-
+                      <br />
+                      <Grid item xs={12} sm={12} md={12}>
+                        <TextField
+                          fullWidth
+                          type='file'
+                          id="profile"
+                          name="profile"
+                          onChange={imageUpload}
+                          helperText="Upload Image"
+                        />
+                      </Grid>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12}>
 
